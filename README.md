@@ -4,9 +4,6 @@ A Python-based **real-time Driver Monitoring System** that uses a laptop webcam 
 
 <img width="480" height="273" alt="DrivingNatashaLeggeroGIFbyCBS (2)" src="https://github.com/user-attachments/assets/f05b2f2b-f633-4da9-af6e-5b1ea4c6e495" />
 
-<img width="480" height="480" alt="NotpinkguyGIF" src="https://github.com/user-attachments/assets/ce8e0e22-5842-4d3b-95be-30a502f3e5aa" />
-
-
 The project is designed to run directly from **Python IDLE on Windows** using OpenCV, MediaPipe Face Mesh, and optionally YOLOv7.
 
 ## 🎬 Live Demo
