@@ -2,10 +2,7 @@
 
 A Python deep-learning/vision project for running a **live Driver Monitoring System from a laptop webcam in IDLE**.
 ## 🎬 Live Demo
-https://www.mdpi.com/2071-1050/16/17/7642
-https://www.samsara.com/uk/blog/drowsiness-detection
-https://imagevision.ai/applications/distracted-driver-detection/
-
+https://jumpshare.com/s/qQlMx4n33hY2K1juoKH7
 
 ## What it detects
 
