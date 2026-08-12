@@ -1,0 +1,13 @@
+train: data/driver_dataset/images/train
+val: data/driver_dataset/images/val
+
+nc: 8
+names:
+  - attentive_driver
+  - distracted_driver
+  - drowsy_driver
+  - phone_usage
+  - yawning
+  - looking_away
+  - eating
+  - drinking
