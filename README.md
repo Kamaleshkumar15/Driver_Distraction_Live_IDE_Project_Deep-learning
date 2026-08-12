@@ -2,15 +2,11 @@
 
 A Python-based **real-time Driver Monitoring System** that uses a laptop webcam to detect driver distraction, drowsiness, yawning, looking away, and optional mobile-phone usage.
 
+## 🎬 Live Demo 
+
 <img width="480" height="273" alt="DrivingNatashaLeggeroGIFbyCBS (2)" src="https://www.image2url.com/r2/default/gifs/1786517639348-a8f4eb28-ed20-4717-b306-8b1ca0ff912b.gif" />
 
 The project is designed to run directly from **Python IDLE on Windows** using OpenCV, MediaPipe Face Mesh, and optionally YOLOv7.
-
-## 🎬 Live Demo
-
-[▶️ Watch the Live Demo](https://jumpshare.com/s/qQlMx4n33hY2K1juoKH7)
-
-> Click the link above to watch the project running in real time.
 
 ## ✨ What It Detects
 
