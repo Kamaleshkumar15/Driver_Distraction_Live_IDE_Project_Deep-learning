@@ -3,7 +3,7 @@
 A Python deep-learning/vision project for running a **live Driver Monitoring System from a laptop webcam in IDLE**.
 ## 🎬 Live Demo
 
-![Driver Distraction Live Demo](Driver_Distraction_Live_Demo_Working.gif)
+https://chatgpt.com/backend-api/estuary/content?id=file_0000000005ac81f79a7cec5a324530ab&ts=496254&p=fs&cid=1&sig=a14c3dd63f6545c30790197e5aaf80d9ea646428d6ccaee43de0ab2fb9e927d2&v=0
 ## What it detects
 
 - Face present / missing
