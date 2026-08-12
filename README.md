@@ -1,65 +1,585 @@
-# 🚗 Driver Distraction Detection System
+# 🚗 Driver Distraction Detection System — Live Laptop Camera
 
-A Python deep-learning/vision project for running a **live Driver Monitoring System**. 
+A Python-based **real-time Driver Monitoring System** that uses a laptop webcam to detect driver distraction, drowsiness, yawning, looking away, and optional mobile-phone usage.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)
-[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces)
+The project is designed to run directly from **Python IDLE on Windows** using OpenCV, MediaPipe Face Mesh, and optionally YOLOv7.
 
 ## 🎬 Live Demo
 
-![Live Demo](Driver_Distraction_Live_Demo.jpg)
+[▶️ Watch the Live Demo](https://jumpshare.com/s/qQlMx4n33hY2K1juoKH7)
 
-## 🌐 Online Hosting & Web Demo
+> Click the link above to watch the project running in real time.
 
-To showcase this project online without requiring users to install Python locally, you can use the following methods:
+## ✨ What It Detects
 
-### Option 1: Hugging Face Spaces (Recommended for Portfolios)
-You can host this live on **Hugging Face Spaces** using **Gradio** or **Streamlit WebRTC**. 
-1. Create a new Space on [Hugging Face](https://huggingface.co/spaces).
-2. Choose **Gradio** or **Streamlit** as your SDK.
-3. Modify the webcam input loop to use `streamlit-webrtc` (for Streamlit) or `gr.Image(source="webcam", streaming=True)` (for Gradio), which securely pipes the user's browser webcam to your cloud model.
-4. Upload your `requirements.txt`, `yolov7.pt` (or a lighter model), and your python scripts.
+* 🙂 Face present / missing
+* 👁️ Eyes closed for a sustained period → **DROWSINESS**
+* 👀 Looking away → **DISTRACTION**
+* 😮 Yawning
+* 📱 Cell phone → **YOLOv7 object detection** *(optional)*
+* ⚠️ Combined warning detection
+* 🔊 Immediate Windows beep alert
+* 📝 Event logging
+* 📊 Real-time FPS display
+* 🟢 Green / 🟡 Yellow / 🔴 Red status indicators
 
-### Option 2: Google Colab (Quick Testing)
-Standard `cv2.VideoCapture(0)` does not work in Colab because the code runs on a cloud server, not your local machine. To run real-time inference in Colab:
-1. Use Colab's custom JavaScript webcam snippets to capture frames from your browser.
-2. Pass the base64 encoded images to your OpenCV/YOLO pipeline.
-3. *See `colab_webcam_demo.ipynb` (if added to repo) for the exact implementation.*
+> ⚠️ **Educational prototype only.** This system is not a certified automotive safety system and should not be used as the sole safety mechanism in a real vehicle.
 
 ---
 
-## 🛠️ What it detects
+## 🧠 System Architecture
 
-*   **Face present / missing**
-*   👁️ **Eyes closed** for a sustained period → DROWSINESS
-*   👀 **Looking away** → DISTRACTION
-*   😮 **Yawning**
-*   📱 **Cell phone** → YOLOv7 object detector (optional weights)
-*   **Combined warning**
-*   🔊 **Immediate Windows beep** (Local execution only)
-*   📝 **Event logging**
-*   📊 **FPS**
-*   🟢/🟡/🔴 **Green/yellow/red on-screen status**
+```text
+                ┌─────────────────┐
+                │  Laptop Camera  │
+                └────────┬────────┘
+                         ↓
+                ┌─────────────────┐
+                │     OpenCV      │
+                └────────┬────────┘
+                         ↓
+              ┌──────────────────────┐
+              │ MediaPipe Face Mesh  │
+              └──────────┬───────────┘
+                         ↓
+          ┌─────────────────────────────┐
+          │ EAR / MAR / Gaze / Head     │
+          │ Direction Analysis           │
+          └──────────────┬──────────────┘
+                         ↓
+              ┌─────────────────────┐
+              │ YOLOv7 Phone       │
+              │ Detection (Optional)│
+              └──────────┬──────────┘
+                         ↓
+              ┌─────────────────────┐
+              │ Temporal Decision   │
+              │ Logic               │
+              └──────────┬──────────┘
+                         ↓
+          ┌──────────────┼──────────────┐
+          ↓              ↓              ↓
+      🔊 Beep        ⚠️ Warning     📝 CSV Log
+```
 
-> **Note:** Educational prototype only. It is not a certified automotive safety system.
+---
 
-## 🏗️ Architecture
+# 🚀 Run Directly from Python IDLE
 
-Laptop Camera/Browser Webcam → OpenCV → MediaPipe Face Mesh → EAR / MAR / gaze / head direction → YOLOv7 phone detection → Temporal decision logic → Beep + warning + CSV log
+## 1. Install Python
 
-## 💻 Run Locally (Directly from IDLE)
+Install **Python 3.10 or Python 3.11**.
 
-The program is deliberately written as normal Python scripts; there is no Jupyter/Colab requirement for local execution.
+Recommended:
 
-### Prerequisites
-*   720p webcam
-*   8 GB RAM or more
-*   Windows 10/11
-*   Python 3.10 or 3.11
+```text
+Python 3.11
+Windows 10 / Windows 11
+```
 
-### Installation Steps
+## 2. Open Command Prompt
 
-1. Open Command Prompt in this folder.
-2. Install dependencies:
-   ```bash
-   py -m pip install -r requirements.txt
+Navigate to the project folder:
+
+```bash
+cd path\to\Driver_Distraction_Live_IDE_Project
+```
+
+## 3. Install Dependencies
+
+```bash
+py -m pip install -r requirements.txt
+```
+
+If `py` is unavailable:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## 4. Run Using IDLE
+
+Open:
+
+```text
+run_project.py
+```
+
+with **Python IDLE**.
+
+Then:
+
+```text
+F5 → Run Module
+```
+
+Allow camera permission if Windows asks.
+
+## 5. Test the System
+
+Try the following:
+
+```text
+👁️ Close your eyes for ~1.5 seconds
+👀 Turn your head left/right
+😮 Open your mouth for ~1 second
+📱 Show a phone to the camera (if YOLOv7 is enabled)
+```
+
+Press:
+
+```text
+Q
+```
+
+to exit the camera window.
+
+---
+
+# 📱 YOLOv7 Phone Detection
+
+The project can operate **without YOLOv7**.
+
+Face monitoring features such as:
+
+* Drowsiness
+* Eye closure
+* Yawning
+* Looking away
+* Head direction
+
+can work without a YOLO model.
+
+For mobile-phone detection, optionally add YOLOv7.
+
+## Project Structure
+
+```text
+external/
+└── yolov7/
+```
+
+Clone the official YOLOv7 repository:
+
+```bash
+git clone https://github.com/WongKinYiu/yolov7.git external/yolov7
+```
+
+Place the pretrained weights here:
+
+```text
+weights/
+└── yolov7.pt
+```
+
+Then run:
+
+```bash
+python run_project.py
+```
+
+If YOLOv7 weights are unavailable, the application automatically continues with the facial-monitoring features and indicates that YOLO detection is disabled.
+
+---
+
+# 🖥️ Recommended Hardware
+
+The project is designed for a normal laptop/desktop.
+
+| Component        | Recommendation               |
+| ---------------- | ---------------------------- |
+| Operating System | Windows 10 / 11              |
+| Python           | 3.10 / 3.11                  |
+| RAM              | 8 GB or more                 |
+| Camera           | 720p webcam                  |
+| CPU              | Modern Intel / AMD processor |
+| GPU              | Optional                     |
+| IDE              | Python IDLE                  |
+
+No Jupyter Notebook or Google Colab is required.
+
+---
+
+# 📂 Dataset
+
+Custom YOLO dataset structure:
+
+```text
+data/
+└── driver_dataset/
+    ├── images/
+    │   ├── train/
+    │   └── val/
+    │
+    └── labels/
+        ├── train/
+        └── val/
+```
+
+## YOLO Label Format
+
+Each annotation follows:
+
+```text
+class_id center_x center_y width height
+```
+
+All coordinates must be normalized between:
+
+```text
+0 and 1
+```
+
+## Suggested Classes
+
+```text
+0 attentive_driver
+1 distracted_driver
+2 drowsy_driver
+3 phone_usage
+4 yawning
+5 looking_away
+6 eating
+7 drinking
+```
+
+---
+
+# 🏋️ Training YOLOv7
+
+The included:
+
+```text
+train_yolov7.py
+```
+
+acts as a launcher for the official YOLOv7 training script.
+
+Example:
+
+```bash
+python train_yolov7.py --data data/driver_dataset/driver.yaml --weights weights/yolov7.pt --epochs 50
+```
+
+After training, run the monitoring system with the trained model:
+
+```bash
+python run_project.py --yolo-weights runs/train/exp/weights/best.pt
+```
+
+---
+
+# ⚙️ Threshold Tuning
+
+Detection thresholds can be configured in:
+
+```text
+src/config.py
+```
+
+Example:
+
+```python
+EYE_CLOSED_SECONDS = 1.5
+LOOK_AWAY_SECONDS = 1.2
+YAWN_SECONDS = 1.0
+PHONE_CONFIRM_SECONDS = 0.4
+```
+
+### Reducing False Warnings
+
+If the system generates too many warnings, increase the time thresholds.
+
+For example:
+
+```python
+EYE_CLOSED_SECONDS = 2.0
+LOOK_AWAY_SECONDS = 1.5
+```
+
+Longer thresholds require the condition to remain active for a longer period before triggering an alert.
+
+---
+
+# 🧩 Main Technologies
+
+| Technology      | Purpose                         |
+| --------------- | ------------------------------- |
+| 🐍 Python       | Core programming                |
+| 👁️ OpenCV      | Camera & image processing       |
+| 🧠 MediaPipe    | Facial landmark detection       |
+| 🤖 YOLOv7       | Optional phone/object detection |
+| 📐 EAR          | Eye Aspect Ratio                |
+| 👄 MAR          | Mouth Aspect Ratio              |
+| 📊 CSV          | Event logging                   |
+| 🔊 Windows Beep | Audio warning                   |
+
+---
+
+# 🔍 Detection Logic
+
+### 😴 Drowsiness
+
+The system monitors eye landmarks and calculates the **Eye Aspect Ratio (EAR)**.
+
+If the eyes remain closed for a predefined duration:
+
+```text
+Eyes Closed
+     ↓
+Temporal Check
+     ↓
+DROWSINESS WARNING
+```
+
+### 👀 Looking Away
+
+Facial landmarks are used to estimate approximate head/gaze direction.
+
+```text
+Normal Direction → SAFE
+Left / Right     → DISTRACTION
+```
+
+### 😮 Yawning
+
+Mouth landmarks are used to estimate the **Mouth Aspect Ratio (MAR)**.
+
+If the mouth remains open for the configured duration:
+
+```text
+Mouth Open
+    ↓
+Temporal Check
+    ↓
+YAWNING DETECTED
+```
+
+### 📱 Phone Detection
+
+YOLOv7 can optionally detect a mobile phone in the camera frame.
+
+```text
+Camera Frame
+     ↓
+YOLOv7
+     ↓
+Phone Detected
+     ↓
+Warning
+```
+
+---
+
+# 🚨 Alert System
+
+When a dangerous condition is detected, the system can provide:
+
+```text
+🔊 Windows Beep
+⚠️ On-Screen Warning
+📝 Event Log
+📊 Detection Status
+```
+
+The interface uses different status levels:
+
+```text
+🟢 GREEN  → Normal
+🟡 YELLOW → Attention
+🔴 RED    → Warning
+```
+
+---
+
+# 📝 Event Logging
+
+Detected events can be recorded for later analysis.
+
+Example:
+
+```text
+Timestamp, Event, Status
+12:10:21, Eye Closed, DROWSINESS
+12:10:25, Looking Away, DISTRACTION
+12:10:30, Yawning, YAWNING
+```
+
+This makes it possible to review driver-monitoring events after testing.
+
+---
+
+# 📊 Real-Time Monitoring
+
+The application displays:
+
+* Camera feed
+* Facial landmarks
+* Detection status
+* Warning messages
+* FPS
+* Optional YOLO bounding boxes
+* Driver monitoring events
+
+Everything runs in real time from the laptop webcam.
+
+---
+
+# 🎓 Project Presentation Points
+
+## Dataset Overview
+
+Driver images containing:
+
+* Attentive driving
+* Distracted driving
+* Drowsiness
+* Phone usage
+* Yawning
+* Looking away
+
+with YOLO-format annotations.
+
+## Model Setup
+
+The system combines:
+
+```text
+YOLOv7
++
+MediaPipe Face Mesh
++
+Temporal Decision Logic
+```
+
+## Facial & Gesture Landmark Detection
+
+The system analyzes:
+
+* Eye landmarks
+* Mouth landmarks
+* Approximate gaze
+* Head direction
+
+## Distraction Logic
+
+Different signals are converted into temporal events:
+
+```text
+Eye Closure
+Looking Away
+Yawning
+Phone Usage
+      ↓
+Temporal Logic
+      ↓
+Driver Status
+```
+
+## Real-Time Monitoring
+
+OpenCV provides the live camera interface with:
+
+* Bounding boxes
+* Labels
+* Warnings
+* FPS
+
+## Alert System
+
+The system provides:
+
+```text
+Visual Warning
++
+Windows Beep
++
+Event Logging
+```
+
+## Testing
+
+Recommended test scenarios:
+
+1. Normal attentive driving
+2. Eye closure
+3. Looking left/right
+4. Yawning
+5. Phone usage
+6. Different lighting conditions
+7. Different camera distances
+
+---
+
+# 📁 Project Structure
+
+```text
+Driver_Distraction_Live_IDE_Project/
+│
+├── run_project.py
+├── train_yolov7.py
+├── requirements.txt
+├── README.md
+│
+├── src/
+│   └── config.py
+│
+├── data/
+│   └── driver_dataset/
+│       ├── images/
+│       │   ├── train/
+│       │   └── val/
+│       └── labels/
+│           ├── train/
+│           └── val/
+│
+├── weights/
+│   └── yolov7.pt
+│
+├── external/
+│   └── yolov7/
+│
+└── runs/
+    └── train/
+```
+
+---
+
+# 🎥 Demo
+
+**Live project demonstration:**
+
+👉 [Watch Driver Distraction Detection Demo](https://jumpshare.com/s/qQlMx4n33hY2K1juoKH7)
+
+---
+
+# ⚠️ Safety Notice
+
+This project is an **educational and research prototype**.
+
+It must **not** be used as the sole safety mechanism in a real vehicle.
+
+Environmental conditions such as:
+
+* Poor lighting
+* Camera position
+* Occlusion
+* Facial appearance
+* Camera quality
+* Head position
+
+can affect detection accuracy.
+
+Always prioritize safe driving and never rely solely on this prototype for vehicle safety.
+
+---
+
+# 👨‍💻 Project
+
+**Driver Distraction Detection System**
+
+Built using:
+
+**Python • OpenCV • MediaPipe • YOLOv7 • Computer Vision • Deep Learning**
+
+⭐ If you find this project useful, consider giving the repository a **star** on GitHub!
